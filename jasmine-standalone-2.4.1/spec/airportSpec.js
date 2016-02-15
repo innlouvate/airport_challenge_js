@@ -22,10 +22,12 @@ describe('Airport', function() {
       airport.land(plane)
       expect(airport.planes).toContain(plane);
     });
-    // it('returns an error message if airport is full', function() {
-    //   for(var i=0; i<=10; i++) { airport.land(new Airplane) }
-    //   expect(airport.land(plane)).toThrow(new Error('Airport is full'));
-    // });
+    it('returns an error message if airport is full', function() {
+      for(var i=1; i<=10; i++) { airport.land(new Airplane) }
+      expect(function() {
+        airport.land(plane)
+      }).toThrowError('Airport is full');
+    });
   });
 
 });

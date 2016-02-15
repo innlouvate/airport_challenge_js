@@ -4,6 +4,10 @@ function Airport() {
 };
 
 Airport.prototype.land = function(plane) {
-  this.planes.push(plane);
-  plane.landed;
+  if (this.planes.length >= this.capacity) {
+    throw new Error('Airport is full');
+  } else {
+    this.planes.push(plane);
+    plane.landed;
+  };
 }
