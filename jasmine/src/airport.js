@@ -2,13 +2,12 @@ function Airport(weatherStation) {
   this.capacity = 10;
   this.planes = [];
   this.weatherStation = weatherStation;
+  this.errorMsg = [];
 };
 
 Airport.prototype.checkin = function(plane) {
-  if (this.weatherStation.isStormy()) {
-    throw new Error('Too stormy to land');
-  } else if (this.planes.length >= this.capacity) {
-    throw new Error('Airport is full');
+  if (this._isStorm() || this._isFull()) {
+    throw new Error(this.errorMsg);
   } else {
     this.planes.push(plane);
     plane.landed(this);
@@ -16,13 +15,42 @@ Airport.prototype.checkin = function(plane) {
 };
 
 Airport.prototype.checkout = function(plane) {
-  var index = this.planes.indexOf(plane);
-  if (this.weatherStation.isStormy()) {
-    throw new Error('Too stormy to takeoff');
-  } else if (index === -1) {
-    throw new Error('Plane is not at this airport');
+  if (this._isStorm() || this._planeAbsent(plane)) {
+    throw new Error(this.errorMsg);
   } else {
-    this.planes.splice(index, 1);
+    this.planes.splice(this._planeIndex(plane), 1);
     plane.departed(this);
+  };
+};
+
+
+Airport.prototype._isFull = function() {
+  if (this.planes.length >= this.capacity) {
+    this.errorMsg.push('Airport is full');
+    return true;
+  } else {
+    return false;
+  }
+};
+
+Airport.prototype._isStorm = function() {
+  if (this.weatherStation.isStormy()) {
+    this.errorMsg.push("It's too stormy");
+    return true;
+  } else {
+    return false;
+  };
+};
+
+Airport.prototype._planeIndex = function(plane) {
+  return this.planes.indexOf(plane);
+};
+
+Airport.prototype._planeAbsent = function(plane) {
+  if (this._planeIndex(plane) === -1) {
+    this.errorMsg.push("Plane is not at this airport");
+    return true;
+  } else {
+    return false;
   };
 };
