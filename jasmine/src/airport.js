@@ -2,7 +2,7 @@ function Airport(weatherStation) {
   this.capacity = 10;
   this.planes = [];
   this.weatherStation = weatherStation;
-  this.errorMsg = [];
+  this.errorMsg = '';
 };
 
 Airport.prototype.checkin = function(plane) {
@@ -26,7 +26,7 @@ Airport.prototype.checkout = function(plane) {
 
 Airport.prototype._isFull = function() {
   if (this.planes.length >= this.capacity) {
-    this.errorMsg.push('Airport is full');
+    this.errorMsg = 'Airport is full';
     return true;
   } else {
     return false;
@@ -35,7 +35,7 @@ Airport.prototype._isFull = function() {
 
 Airport.prototype._isStorm = function() {
   if (this.weatherStation.isStormy()) {
-    this.errorMsg.push("It's too stormy");
+    this.errorMsg = "It's too stormy";
     return true;
   } else {
     return false;
@@ -48,7 +48,7 @@ Airport.prototype._planeIndex = function(plane) {
 
 Airport.prototype._planeAbsent = function(plane) {
   if (this._planeIndex(plane) === -1) {
-    this.errorMsg.push("Plane is not at this airport");
+    this.errorMsg = "Plane is not at this airport";
     return true;
   } else {
     return false;
