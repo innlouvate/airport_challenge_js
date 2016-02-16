@@ -5,7 +5,6 @@ describe('Airplane', function() {
 
   beforeEach(function() {
     plane = new Airplane();
-    airport = new Airport();
   });
 
   describe('has initialised values', function() {
