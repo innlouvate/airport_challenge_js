@@ -17,7 +17,7 @@ describe('Airplane', function() {
     });
   });
 
-  describe('landing / checkin to airport', function() {
+  describe('landed / checkin to airport', function() {
     it('inflight status is now false', function() {
       plane.landed(airport)
       expect(plane.inflight).toEqual(false);
